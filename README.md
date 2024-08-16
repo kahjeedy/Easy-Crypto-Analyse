@@ -45,6 +45,76 @@ python crypto_analysis.py -f Bitcoin_1_20241508.json -c usd
 
 ```sh
 pip install -r requirements.txt
+```
+
+### Exporting JSON Data from Trezor Suite
+![image](https://github.com/user-attachments/assets/5883b0d0-c9c9-4e12-86e4-b3a463c774a9)
+
+###Example Output
+
+![Figure_1](https://github.com/user-attachments/assets/27fec376-1940-49e0-b512-de19d725c698)
+
+
+```json
+{
+    "Total ETH Received": 1.5,
+    "Total ETH Sent": 0.0,
+    "Current Balance (ETH)": 1.5,
+    "Total Cost (USD)": 2415.0,
+    "Current Value (USD)": 5250.0,
+    "Total Profit (USD)": 2835.0,
+    "Total Fees Paid (ETH)": 0.005,
+    "Total Fees Paid (USD)": 17.5,
+    "Total Transactions": 5,
+    "Transaction Summary by Type": {
+        "recv": 5,
+        "sent": 0
+    },
+    "Transactions": [
+        {
+            "Transaction ID": "0x1",
+            "Time": "2021-01-01 00:00:00",
+            "Amount": 0.5,
+            "Wallet Value": 365.0,
+            "Profit": 1385.0,
+            "Fee": 0.001
+        },
+        {
+            "Transaction ID": "0x2",
+            "Time": "2021-02-01 00:00:00",
+            "Amount": 0.3,
+            "Wallet Value": 1120.0,
+            "Profit": 2015.0,
+            "Fee": 0.001
+        },
+        {
+            "Transaction ID": "0x3",
+            "Time": "2021-03-01 00:00:00",
+            "Amount": 0.2,
+            "Wallet Value": 1600.0,
+            "Profit": 2395.0,
+            "Fee": 0.001
+        },
+        {
+            "Transaction ID": "0x4",
+            "Time": "2021-04-01 00:00:00",
+            "Amount": 0.1,
+            "Wallet Value": 2090.0,
+            "Profit": 2555.0000000000005,
+            "Fee": 0.001
+        },
+        {
+            "Transaction ID": "0x5",
+            "Time": "2021-05-01 00:00:00",
+            "Amount": 0.4,
+            "Wallet Value": 4200.0,
+            "Profit": 2835.0,
+            "Fee": 0.001
+        }
+    ]
+}
+```
+
 
 
 
