@@ -47,14 +47,14 @@ python crypto_analysis.py -f Bitcoin_1_20241508.json -c usd
 pip install -r requirements.txt
 ```
 
-** Exporting JSON Data from Trezor Suite**
+** Exporting JSON Data from Trezor Suite**:
 ![image](https://github.com/user-attachments/assets/5883b0d0-c9c9-4e12-86e4-b3a463c774a9)
 
-**Example Output**
-**Graph**
+**Example Output**:
+**Graph**:
 ![Figure_1](https://github.com/user-attachments/assets/27fec376-1940-49e0-b512-de19d725c698)
 
-**JSON**
+**JSON**:
 ```json
 {
     "Total ETH Received": 1.5,
