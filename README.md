@@ -32,7 +32,19 @@ The Cryptocurrency Transaction Analyzer is a Python script that processes crypto
 
 To use the Cryptocurrency Transaction Analyzer install python and the requirements
 
+## Usage
+python crypto_analysis.py -f path/file.json -c currency
+
+Example:
+python crypto_analysis.py -f Ethereum_1_20241608.json -c aud
+python crypto_analysis.py -f Bitcoin_1_20241508.json -c usd
+
+
+
 ### Install Dependencies
 
 ```sh
 pip install -r requirements.txt
+
+
+
