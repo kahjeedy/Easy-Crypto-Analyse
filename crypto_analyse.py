@@ -8,10 +8,10 @@ import time
 import os
 import argparse
 
-# Initialize cache dictionary at the start of the script
+
 price_cache = {}
 
-# Function to get the current price in the specified currency from CoinGecko API
+# Function to get the current price
 def get_price(coin_id, currency):
     url = "https://api.coingecko.com/api/v3/simple/price"
     params = {
@@ -30,11 +30,11 @@ def get_price(coin_id, currency):
     else:
         raise ConnectionError(f"Failed to fetch data: {response.status_code}")
 
-# Function to get the historical price at a given timestamp from CoinGecko API in the specified currency
+# Function to get the historical price
 def get_historical_price(coin_id, timestamp, currency, retries=5):
     date = datetime.utcfromtimestamp(timestamp).strftime('%d-%m-%Y')
     
-    # Check if we've already fetched this date's price
+
     if date in price_cache:
         return price_cache[date]
     
@@ -60,7 +60,7 @@ def get_historical_price(coin_id, timestamp, currency, retries=5):
                 time.sleep(60)  # Wait for 60 seconds before retrying
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
-            time.sleep(60)  # Wait for 60 seconds before retrying
+            time.sleep(60) 
     
     raise ConnectionError("Exceeded maximum retry attempts due to rate limiting.")
 
@@ -73,9 +73,9 @@ def create_output_folders(coin_type):
     
     return data_folder
 
-# Function to process the file and generate the all-in-one plot
+
 def process_file(file_path, currency):
-    global price_cache  # Ensure price_cache is accessible within the function
+    global price_cache 
     
     # Load the JSON file
     try:
@@ -95,7 +95,7 @@ def process_file(file_path, currency):
     # Create output folders for the specific coin type
     data_folder = create_output_folders(coin_type)
 
-    # Initialize summary variables
+    #process variables
     total_received = 0.0
     total_sent = 0.0
     total_cost_currency = 0.0
@@ -104,15 +104,15 @@ def process_file(file_path, currency):
     transaction_summary = {}
     transaction_details = []
 
-    # Lists for plotting
+    #graph variables
     timestamps = []
     wallet_values = []
     profits = []
 
-    # Initialize request counter for rate limiting
+    #Request count to avoid api limiting
     request_count = 0
 
-    # Get the current price in the chosen currency
+
     price_in_currency = get_price(coin_id, currency)  # Ensure this is defined at the start of processing
 
     # Iterate through the transactions
@@ -120,7 +120,7 @@ def process_file(file_path, currency):
         timestamp = tx['blockTime']
         datetime_of_transaction = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
         
-        # Increment request count and apply rate limiting
+        #Rate limit
         request_count += 1
         if request_count > 5:
             print("Reached 5 requests, waiting for 60 seconds to avoid rate limiting...")
@@ -144,7 +144,6 @@ def process_file(file_path, currency):
             total_sent += amount
             print(f"Sent: {amount} {coin_type.upper()}")
 
-        # Sum the fees in the appropriate coin type
         fee = float(tx['fee'])
         total_fees += fee
         print(f"Transaction Fee: {fee} {coin_type.upper()}")
@@ -178,12 +177,12 @@ def process_file(file_path, currency):
         
         transaction_count += 1
 
-    # Calculate current balance and fees in the chosen currency
+    # Calculate current balance and fees
     current_balance = total_received - total_sent
     current_value_currency = current_balance * price_in_currency
     total_fees_currency = total_fees * price_in_currency
 
-    # Prepare summary data
+    #summary data
     summary_data = {
         f"Total {coin_type.upper()} Received": total_received,
         f"Total {coin_type.upper()} Sent": total_sent,
@@ -198,7 +197,6 @@ def process_file(file_path, currency):
         "Transactions": transaction_details  # Include all transactions
     }
 
-    # Print out the summary
     print("\n--- SUMMARY ---")
     print(json.dumps(summary_data, indent=4))
 
@@ -215,7 +213,7 @@ def process_file(file_path, currency):
     # Smooth curve plotting using interpolation
     x_smooth = np.linspace(x_numeric.min(), x_numeric.max(), 500)
 
-    # Plot All-in-One Graph (Wallet Value and Profit)
+    # wallet, profit graph
     plt.figure(figsize=(12, 8))
 
     # Plot Wallet Value (curved and straight lines)
@@ -242,7 +240,7 @@ def process_file(file_path, currency):
     plt.xticks(ticks=x_numeric, labels=timestamps, rotation=45)
     plt.tight_layout()
 
-    # Save the All-in-One plot
+    # Save plot
     all_in_one_plot_path = os.path.join(data_folder, f'{coin_type}_all_in_one_plot.png')
     plt.savefig(all_in_one_plot_path)
     print(f"All-in-One plot has been saved to {all_in_one_plot_path}")
@@ -250,7 +248,7 @@ def process_file(file_path, currency):
     # Show All-in-One plot
     plt.show()
 
-# Main function to handle arguments and execute the script
+
 def main():
     parser = argparse.ArgumentParser(description="Process cryptocurrency transaction data and generate plots.")
     parser.add_argument("-f", "--file", required=True, help="Path to the JSON file containing transaction data.")
